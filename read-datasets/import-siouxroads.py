@@ -22,6 +22,9 @@ backedges = tuple([tuple(e) for e in np.flip(a, axis=1)]) #backward edges as tup
 G.add_edges_from(edges)
 G.add_edges_from(backedges)
 
+### compute adjacency matrix of G
+A = nx.adjacency_matrix(G)
+A = A.todense()
 
 ### draw the graph with node labels
 plt.figure()
