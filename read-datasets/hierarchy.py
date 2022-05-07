@@ -17,4 +17,22 @@ def leader_nodes(G):
 
 	return leaders
 
+def hierarchy(G):
+
+	all_paths_length = dict(nx.all_pairs_shortest_path_length(G))
+
+	leaders = leader_nodes(G)
+
+	non_leaders = set(G.nodes()).difference(set(leaders))
+
+	hierarchy = {}
+
+	for node in non_leaders:
+		connected_leaders = {key:value for key,value in all_paths_length[node].items() if key in leaders}
+		min_dist = min(connected_leaders.values())
+		dic[node] = {key:value for key,value in connected_leaders.items() if value == min_dist}
+
+	return hierarchy
+
+
 
