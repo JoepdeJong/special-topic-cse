@@ -12,9 +12,9 @@ def leader_nodes(G):
 
 	leaders = []
 	for component in SCC:
-	    if len(component)==1 and G.out_degree()[list(component)[0]]==0:
-	        leaders.append(list(component)[0])
-
+		if len(component)==1 and G.out_degree()[list(component)[0]]==0:
+			leaders.append(list(component)[0])
+	
 	return leaders
 
 def hierarchy(G):
@@ -30,7 +30,7 @@ def hierarchy(G):
 	for node in non_leaders:
 		connected_leaders = {key:value for key,value in all_paths_length[node].items() if key in leaders}
 		min_dist = min(connected_leaders.values())
-		dic[node] = {key:value for key,value in connected_leaders.items() if value == min_dist}
+		hierarchy[node] = {key:value for key,value in connected_leaders.items() if value == min_dist}
 
 	return hierarchy
 
