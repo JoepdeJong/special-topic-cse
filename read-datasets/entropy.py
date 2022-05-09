@@ -42,7 +42,7 @@ def entropy(tol, A):
     n = len(A)
     h = 0
     T = transmatrix(A)
-    qstar = stationarydistr(T, tol, A)
+    qstar = stationarydistr(T, tol)
     for i in range(n):
         for j in range(n):
             if T[i,j] > 0:
@@ -53,6 +53,6 @@ if __name__ == '__main__':
     G = import_draw_roads(draw=False)
     A = nx.adjacency_matrix(G)
     A = A.todense()
-    tol = 1e-13
+    tol = 1e-6
     h = entropy(tol, A)
     print(h)
