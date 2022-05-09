@@ -1,4 +1,4 @@
-from import_siouxroads import *
+from import_literature1976 import *
 
 
 ### compute normalized Henrici departure from normality d_f
@@ -49,10 +49,30 @@ def entropy(tol, A):
                 h = h - T[i,j]*qstar[j]*np.log(T[i,j])
     return h
 
+# compute weighted sum of eigenvectors with eigenvalue 1
+def weightedev(T):
+	indices = np.where(np.linalg.eig(T)[0] == 1)
+	ev = np.zeros(len(T))
+	for i in indices[0]:
+		ev = ev + np.linalg.eig(T)[1][:,i]
+	return ev/indices[0].size
+
+def entropy2(A):
+	h = 0
+	T = transmatrix(A)
+	ev = weightedev(T)
+	n = len(A)
+	for i in range(n):
+		for j in range(n):
+			if T[i,j] > 0:
+				h = h - T[i,j]*ev[j]*np.log(T[i,j])
+	return h
+
 if __name__ == '__main__':
-    G = import_draw_roads(draw=False)
-    A = nx.adjacency_matrix(G)
-    A = A.todense()
-    tol = 1e-6
-    h = entropy(tol, A)
-    print(h)
+	G = import_draw_literature(draw=False)
+	A = nx.adjacency_matrix(G)
+	A = A.todense()
+	tol = 1e-10
+	h1 = entropy(tol, A)
+	h2 = entropy2(A)
+	print(h2)
