@@ -25,8 +25,8 @@ def transmatrix(A):
 
 # find stationary distribution qstar
 
-def stationarydistr(T, tol, A):
-    n = len(A)
+def stationarydistr(T, tol):
+    n = len(T)
     q0 = np.ones(n)/n
     #perform step 1 outside of while loop such that condition is met the first iteration
     qold = q0
