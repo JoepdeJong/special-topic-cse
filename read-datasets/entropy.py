@@ -1,6 +1,5 @@
 from import_siouxroads import *
 
-A = import_draw_roads(draw=False)
 
 ### compute normalized Henrici departure from normality d_f
 def Henrici(A):
@@ -8,15 +7,14 @@ def Henrici(A):
     frob = np.linalg.norm(A, 'fro')
     return np.sqrt(frob**2 - np.sum(lambdas))/frob
 
-df = Henrici(A)
-
 ### compute entropy using a random walk
 # first compute transition rates T_ij and transition matrix T
 def transmatrix(A):
+    n = len(A)
     outdeg = np.zeros(n)
     for i in range(n):
         outdeg[i] = np.sum(A[i,:])
-    
+        
     T = np.zeros((n,n))
     for j in range(n):
         if outdeg[j] > 0:
@@ -28,6 +26,7 @@ def transmatrix(A):
 # find stationary distribution qstar
 
 def stationarydistr(T, tol, A):
+    n = len(A)
     q0 = np.ones(n)/n
     #perform step 1 outside of while loop such that condition is met the first iteration
     qold = q0
@@ -40,6 +39,7 @@ def stationarydistr(T, tol, A):
 
 # compute entropy
 def entropy(tol, A):
+    n = len(A)
     h = 0
     T = transmatrix(A)
     qstar = stationarydistr(T, tol, A)
@@ -49,6 +49,10 @@ def entropy(tol, A):
                 h = h - T[i,j]*qstar[j]*np.log(T[i,j])
     return h
 
-tol = 1e-10
-
-h = entropy(tol, A)
+if __name__ == '__main__':
+    G = import_draw_roads(draw=False)
+    A = nx.adjacency_matrix(G)
+    A = A.todense()
+    tol = 1e-13
+    h = entropy(tol, A)
+    print(h)
