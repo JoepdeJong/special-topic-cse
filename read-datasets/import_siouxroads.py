@@ -39,4 +39,4 @@ def import_draw_roads(draw=False):
 	nx.draw(G, with_labels= True)
 	plt.show()
 
-	return G
+	return G, A
