@@ -1,4 +1,4 @@
-from import_literature1976 import *
+from import_rhesusbrain import *
 
 
 ### compute normalized Henrici departure from normality d_f
@@ -51,11 +51,11 @@ def entropy(tol, A):
 
 # compute weighted sum of eigenvectors with eigenvalue 1
 def weightedev(T):
-	indices = np.where(np.linalg.eig(T)[0] == 1)
+	indices = np.where(np.round(np.linalg.eig(T)[0], 8) == 1) #round eigenvalues because of complex values with floating point errors)
 	ev = np.zeros(len(T))
 	for i in indices[0]:
 		ev = ev + np.linalg.eig(T)[1][:,i]
-	return ev/indices[0].size
+	return ev/np.sum(ev) #divide by sum to make sure it represents a probability distribution
 
 def entropy2(A):
 	h = 0
@@ -69,9 +69,10 @@ def entropy2(A):
 	return h
 
 if __name__ == '__main__':
-	G = import_draw_literature(draw=False)
+	G = import_draw_rhesusbrain(draw=False)
 	A = nx.adjacency_matrix(G)
 	A = A.todense()
+	df = Henrici(A)
 	tol = 1e-10
 	h1 = entropy(tol, A)
 	h2 = entropy2(A)

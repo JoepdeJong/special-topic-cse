@@ -46,4 +46,4 @@ def import_draw_literature(draw=False):
 	nx.draw(G, with_labels= True)
 	plt.show()
 
-	return G, A
+	return G
