@@ -15,7 +15,7 @@ def import_draw_literature(draw=False):
 	os.chdir(os.pardir)
 	os.chdir('datasets')
 
-	fileName = 'literature_1976.txt'
+	fileName = '92_literature_1976.txt'
 
 	a = np.loadtxt(fileName, skiprows = 37)
 	a = a[:, :2].astype(np.int32) #a is now an array with each row a link between two nodes in the network
@@ -46,4 +46,4 @@ def import_draw_literature(draw=False):
 	nx.draw(G, with_labels= True)
 	plt.show()
 
-	return G, A
+	return G
