@@ -38,7 +38,7 @@ def import_draw_literature(draw=False):
 	A = A.todense()
 
 	if not draw:
-		return G
+		return G, A
 
 	### draw the graph with node labels
 	plt.close('all')
