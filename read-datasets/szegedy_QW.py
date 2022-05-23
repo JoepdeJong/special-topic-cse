@@ -29,21 +29,18 @@ def SQW_unitary(P):
         b_vec.append(sp.csr_matrix(([1],([i],[0])),shape = (N,1)))
 
     psi = []
-    P_sqr = np.sqrt(P)
+    sqrt_edges = np.sqrt(P).T@(b_vec)
     for j in range(N):
-        sk = sp.csr_matrix(np.zeros(N)).T
-        for k in range(N):
-            sk += P_sqr[k,j]*b_vec[k]
+        psi.append(sp.kron(b_vec[:,j],P_sqr[j,:].T))
 
-        psi.append(sp.kron(b_vec[j],sk))
-
-    PI = sp.csr_matrix((N*N,N*N))
+    N2 = N*N
+    PI = sp.csr_matrix((N2,N2))
     for j in range(N):
         PI += psi[j]*psi[j].T
 
-    S = sp.csr_matrix((N*N,N*N))
+    S = sp.csr_matrix((N2,N2))
     for j in range(N):
         for k in range(N):
             S += sp.kron(b_vec[j],b_vec[k])*sp.kron(b_vec[k],b_vec[j]).T
 
-    return S*(2*PI-sp.eye(N*N))
+    return S*(2*PI-sp.eye(N2))
