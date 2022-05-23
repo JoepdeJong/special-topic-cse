@@ -23,10 +23,10 @@ def SQW_unitary(P):
     '''
     N = len(P)
 
-    b_vec = [] #canonical basis vectors
+    b_vec = sp.csr_matrix((N,N)) #canonical basis vectors
 
     for i in range(N):
-        b_vec.append(sp.csr_matrix(([1],([i],[0])),shape = (N,1)))
+        b_vec[:,i] = (csr_matrix(([1],([i],[0])),shape = (N,1)))
 
     psi = []
     sqrt_edges = np.sqrt(P).T@(b_vec)
