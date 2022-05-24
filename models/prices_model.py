@@ -35,16 +35,12 @@ def prices_model(n, m, k0 = 1):
             degrees[joined] = 0
             
             # Choose a node i with probability proportional to its in-degree and the factor k0.
-            p = (degrees + k0s)/(sum(degrees) + 1)
+            p = (degrees + k0s)/(sum(degrees) + k0)
 
+            i = np.random.choice(range(n), p=p)
 
-            # Find node i by looping over the probabilities.
-            randp = random.random()
-            tot = 0
-            i = -1
-            while tot < randp:
-                i += 1
-                tot += p[i]
+            if i == n+1:
+                break
 
             # Create directed edges (citation)
             G.add_edge(n_nodes, i)
@@ -62,6 +58,6 @@ def prices_model(n, m, k0 = 1):
     return G
 
 if __name__ == '__main__':
-    prices_graph = prices_model2(20, 1, 1)
+    prices_graph = prices_model(20, 1, 1)
     nx.draw(prices_graph, with_labels=True)
     plt.show()
