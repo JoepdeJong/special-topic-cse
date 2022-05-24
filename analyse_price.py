@@ -11,7 +11,8 @@ from models.prices_model import prices_model
 n = 20 # Number of nodes
 m = range(1, 5) # Number of edges
 k0 = [0.1, 0.5, 1, 5, 10] # Initial factor
-initial_nodes = 3
+initial_nodes = 1
+reciprocal_prob = 0.5
 
 tol = 1e-10 # Entropy tolerance
 
@@ -23,7 +24,7 @@ data = np.zeros(20*5)
 
 for i in m:
     for k in k0:
-        graph = prices_model(n, i, k, initial_nodes)
+        graph = prices_model(n, i, k, initial_nodes, reciprocal_prob)
 
         A = nx.adjacency_matrix(graph)
         A = A.todense()
