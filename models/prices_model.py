@@ -3,19 +3,19 @@ from networkx import nx
 import numpy as np
 import random
 
-def prices_model(n, m, k0 = 1):
+def prices_model(n, m, k0 = 1, n0 = 1):
     """
-    Prices model. Implementation according to wikipedia, but it doesn't work. xd
+    Extended version of Prices model: possibility to vary n0 (the number of initial nodes.)
     """
     in_degrees = np.zeros(n, dtype=int)
-    # in_degrees = np.zeros(n, dtype=int)
-    # out_degrees = np.zeros(n, dtype=int)
     
-    # Initialize graph with 1 node
+    # Initialize graph with n0 nodes
     G = nx.DiGraph()
-    G.add_node(1)
 
-    n_nodes = 1
+    for i in range(n0):
+        G.add_node(i)
+
+    n_nodes = n0
 
     # At each time step
     while n_nodes < n:
@@ -47,7 +47,7 @@ def prices_model(n, m, k0 = 1):
             in_degrees[i] += 1
             joined += [i]
 
-            print('Add edge', k+1, 'of', m, 'to node', i+1)
+            # print('Add edge', k+1, 'of', m, 'to node', i+1)
 
             # Break when n_nodes is less than m.
             if len(joined) == n_nodes:
@@ -58,6 +58,6 @@ def prices_model(n, m, k0 = 1):
     return G
 
 if __name__ == '__main__':
-    prices_graph = prices_model(20, 1, 1)
+    prices_graph = prices_model(20, 3, 1, 5)
     nx.draw(prices_graph, with_labels=True)
     plt.show()

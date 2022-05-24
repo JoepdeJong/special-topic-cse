@@ -1,4 +1,5 @@
-from import_rhesusbrain import *
+import numpy as np
+# from import_rhesusbrain import *
 
 
 ### compute normalized Henrici departure from normality d_f
