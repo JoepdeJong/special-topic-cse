@@ -23,7 +23,7 @@ def import_draw_literature(draw=False):
 	os.chdir(os.pardir)			
 	os.chdir('read-datasets')
 
-	### add 24 nodes to a directed graph
+	### add 35 nodes to a directed graph
 	G = nx.DiGraph()
 	G.add_nodes_from(np.arange(1,35))
 
