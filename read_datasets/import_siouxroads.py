@@ -30,9 +30,11 @@ def import_draw_roads(draw=False):
 
 	G.add_edges_from(edges)
 	G.add_edges_from(backedges)
+	
+	A = nx.adjacency_matrix(G).todense()
 
 	if not draw:
-		return G
+		return G,A
 
 	### draw the graph with node labels
 	plt.figure()
