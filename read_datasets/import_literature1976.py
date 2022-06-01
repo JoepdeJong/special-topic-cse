@@ -21,7 +21,7 @@ def import_draw_literature(draw=False):
 	a = a[:, :2].astype(np.int32) #a is now an array with each row a link between two nodes in the network
 
 	os.chdir(os.pardir)			
-	os.chdir('read-datasets')
+	os.chdir('read_datasets')
 
 	### add 35 nodes to a directed graph
 	G = nx.DiGraph()
@@ -46,4 +46,4 @@ def import_draw_literature(draw=False):
 	nx.draw(G, with_labels= True)
 	plt.show()
 
-	return G
+	return G, A
