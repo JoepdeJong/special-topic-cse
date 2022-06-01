@@ -27,12 +27,12 @@ def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_threshold = 1):
 
         
         # Pick m nodes at random with probability proportional to their degree + k0
-        k0 = 1/n_nodes
+        k0n = k0/n_nodes
         if sum_in_degrees == 0:
             # Make a numpy array of size n_nodes with values 1/n_nodes
-            p = np.ones(n_nodes) * k0
+            p = np.ones(n_nodes) * 1/n_nodes
         else:
-            p = (in_degrees[:n_nodes]/sum_in_degrees + k0)/2
+            p = (in_degrees[:n_nodes]/sum_in_degrees + k0n)/(1+k0)
 
         nodes_to_join = np.random.choice(n_nodes, min(n_nodes, m), replace=False, p=p)
 
@@ -58,6 +58,6 @@ def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_threshold = 1):
     return G
 
 if __name__ == '__main__':
-    prices_graph = prices_model(10, 3, 1, 1, 0.95)
+    prices_graph = prices_model(20, 3, 1, 1, 0.20)
     nx.draw(prices_graph, with_labels=True)
     plt.show()
