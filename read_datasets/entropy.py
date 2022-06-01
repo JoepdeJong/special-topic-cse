@@ -1,5 +1,4 @@
 import numpy as np
-from import_rhesusbrain import *
 
 
 ### compute normalized Henrici departure from normality d_f
@@ -72,6 +71,7 @@ def entropy2(A):
     return h
 
 if __name__ == '__main__':
+    from import_rhesusbrain import *
     G = import_draw_rhesusbrain(draw=False)
     A = nx.adjacency_matrix(G)
     A = A.todense()
