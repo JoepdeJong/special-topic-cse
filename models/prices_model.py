@@ -3,7 +3,7 @@ from networkx import nx
 import numpy as np
 import random
 
-def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_prob = 1):
+def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_threshold = 1):
     """
     Extended version of Prices model: possibility to vary n0 (the number of initial nodes.)
     """
@@ -46,33 +46,26 @@ def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_prob = 1):
             out_degrees[n_nodes] += 1
             joined += [i]
 
-            # print('Add edge', k+1, 'of', m, 'to node', i+1)
+            # Reciprocals
+            if reciprocal_threshold < 1:
+                if out_degrees[i] > 0:
+                    p = 1/(out_degrees[i])
+                else:
+                    p = 1
+
+                if p >= reciprocal_threshold:
+                    G.add_edge(i, n_nodes)
+                    in_degrees[n_nodes] += 1
+                    out_degrees[i] += 1
 
             # Break when n_nodes is less than m.
             if len(joined) == n_nodes:
                 break
 
         n_nodes += 1
-
-    # Reciprocals
-    if reciprocal_prob < 1:
-        # Generate a reciprocal edge i -> j with probability proportional to 1/out_degree(j)
-
-        for i in range(n):
-            if out_degrees[i] > 0:
-                p = 1/out_degrees[i]
-            else:
-                p = 0
-            # Get all incoming edges from node i
-            incoming = G.in_edges(i)
-
-            if p >= reciprocal_prob:
-                # For each edge, generate a reciprocal edge with probability p
-                for j in incoming:
-                    G.add_edge(j[1], j[0])
     return G
 
 if __name__ == '__main__':
-    prices_graph = prices_model(10, 2, 1, 1, .5)
+    prices_graph = prices_model(50, 3, 1, 1, 0.3)
     nx.draw(prices_graph, with_labels=True)
     plt.show()
