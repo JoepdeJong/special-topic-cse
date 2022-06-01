@@ -38,7 +38,7 @@ def import_draw_literature(draw=False):
 	A = A.todense()
 
 	if not draw:
-		return G, A
+		return G
 
 	### draw the graph with node labels
 	plt.close('all')
@@ -46,4 +46,4 @@ def import_draw_literature(draw=False):
 	nx.draw(G, with_labels= True)
 	plt.show()
 
-	return G, A
+	return G
