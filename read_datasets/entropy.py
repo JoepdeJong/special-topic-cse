@@ -6,6 +6,8 @@ from import_rhesusbrain import *
 def Henrici(A):
     lambdas = np.square(np.abs(np.linalg.eig(A)[0]))
     frob = np.linalg.norm(A, 'fro')
+    if (frob**2 - np.sum(lambdas)) < 0:
+        return 0
     return np.sqrt(frob**2 - np.sum(lambdas))/frob
 
 ### compute entropy using a random walk
