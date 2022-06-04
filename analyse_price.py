@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 from models.prices_model import prices_model
 
-n = 50 # Number of nodes
+n = 100 # Number of nodes
 n_iterations = 5 # Number of iterations
 m = 3 # Number of edges
 k0 = 1 # Initial factor

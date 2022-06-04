@@ -17,6 +17,9 @@ def leader_nodes(G):
 	
 	return leaders
 
+def is_leader_node(G, node):
+	return G.out_degree()[node]==0
+
 def hierarchy(G):
 
 	all_paths_length = dict(nx.all_pairs_shortest_path_length(G))
