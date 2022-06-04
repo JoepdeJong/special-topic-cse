@@ -6,9 +6,11 @@ def node_removal(graph: nx.DiGraph, n: int = 1):
     Remove n nodes from the graph.
     """
     nodes = list(graph.nodes)
-    random.shuffle(nodes)
-    for i in range(n):
-        graph.remove_node(nodes[i])
+
+    # Pick n random indices
+    indices = random.sample(range(len(nodes)), n)
+    for index in indices:
+        graph.remove_node(nodes[index])
     return graph
 
 def edge_removal(graph: nx.DiGraph, n: int = 1):
@@ -16,9 +18,11 @@ def edge_removal(graph: nx.DiGraph, n: int = 1):
     Remove n edges from the graph.
     """
     edges = list(graph.edges)
-    random.shuffle(edges)
-    for i in range(n):
-        graph.remove_edge(edges[i][0], edges[i][1])
+
+    # Pick n random indices
+    indices = random.sample(range(len(edges)), n)
+    for index in indices:
+        graph.remove_edge(edges[index][0], edges[index][1])
     return graph
 
 def edge_reversal(graph: nx.DiGraph, n: int = 1):
@@ -26,11 +30,13 @@ def edge_reversal(graph: nx.DiGraph, n: int = 1):
     Reverse n edges from the graph.
     """
     edges = list(graph.edges)
-    random.shuffle(edges)
-    for i in range(n):
-        graph.add_edge(edges[i][1], edges[i][0])
-        graph.remove_edge(edges[i][0], edges[i][1])
+    indices = random.sample(range(len(edges)), n)
+    for index in indices:
+        graph.add_edge(edges[index][1], edges[index][0])
+        graph.remove_edge(edges[index][0], edges[index][1])
 
+    # TODO: what do we do if the reciprocal edge already exists?
+    
     return graph
 
 def edge_addition(graph: nx.DiGraph, n: int = 1):
