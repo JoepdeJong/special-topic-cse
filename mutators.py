@@ -1,30 +1,30 @@
-from random import random
 import networkx as nx
+import numpy as np
 
 def node_removal(graph: nx.DiGraph, n: int = 1):
     """
     Remove n nodes from the graph.
     """
-    nodes = list(graph.nodes)
+    # Get number of nodes in graph
+    n_nodes = len(graph.nodes)
 
     # Pick n random indices
-    indices = random.sample(range(len(nodes)), n)
-    for index in indices:
-        graph.remove_node(nodes[index])
-        nodes.remove(nodes[index])
+    indices = np.random.choice(range(n_nodes), min(n, n_nodes))
+    graph.remove_nodes_from(indices)
+
     return graph
 
 def edge_removal(graph: nx.DiGraph, n: int = 1):
     """
     Remove n edges from the graph.
     """
-    edges = list(graph.edges)
+    # Convert list of edges to array
+    edges = np.array(graph.edges)
+    n_edges = len(edges)
 
     # Pick n random indices
-    indices = random.sample(range(len(edges)), n)
-    for index in indices:
-        graph.remove_edge(edges[index][0], edges[index][1])
-        edges.remove(edges[index])
+    indices = np.random.choice(range(n_edges), min(n, n_edges))
+    graph.remove_edges_from(edges[indices])
     return graph
 
 def edge_reversal(graph: nx.DiGraph, n: int = 1):
@@ -32,7 +32,8 @@ def edge_reversal(graph: nx.DiGraph, n: int = 1):
     Reverse n edges from the graph.
     """
     edges = list(graph.edges)
-    indices = random.sample(range(len(edges)), n)
+    n_edges = len(edges)
+    indices = np.random.choice(range(n_edges), min(n, n_edges))
     for index in indices:
         if (edges[index][1], edges[index][0]) not in edges:
             graph.add_edge(edges[index][1], edges[index][0])
@@ -50,15 +51,16 @@ def edge_addition(graph: nx.DiGraph, n: int = 1):
     nodes = list(graph.nodes)
     edges = list(graph.edges)
 
-    # Return if the graph is already connected
-    if len(edges) == 1/2*len(nodes)*(len(nodes)-1):
-        return graph
+    max_edges = len(nodes) * (len(nodes) - 1) / 2
 
     k = 0
     while k < n:
+        # Return if the graph is fully connected
+        if len(edges) == max_edges:
+            break
+
         # Pick 2 random nodes
-        i = random.randint(0, len(nodes)-1)
-        j = random.randint(0, len(nodes)-1)
+        [i,j] = np.random.choice(len(nodes), 2)
 
         if i != j and (i, j) not in edges:
             graph.add_edge(i, j)
