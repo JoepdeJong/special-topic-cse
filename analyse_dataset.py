@@ -35,5 +35,30 @@ plt.ylabel('Henrici')
 plt.xscale('log')
 plt.legend()
 
+## Spectral Scaling
+plt.figure()
+for n in n_nodes:
+    data_n_p = data[data['n'] == n].groupby('reciprocal_threshold')
+    plt.plot(reciprocal_threshold, data_n_p['spectral_scaling'].mean()/n, label='n = ' + str(n))
+
+plt.title('Spectral Scaling of prices model')
+plt.xlabel('Reciprocal threshold')
+plt.ylabel('Spectral Scaling / n')
+# plt.yscale('log')
+# plt.xscale('log')
+plt.legend()
+
+## Spectral Gap
+plt.figure()
+for n in n_nodes:
+    data_n_p = data[data['n'] == n].groupby('reciprocal_threshold')
+    plt.plot(reciprocal_threshold, data_n_p['spectral_gap'].mean(), label='n = ' + str(n))
+
+plt.title('Spectral Gap of prices model')
+plt.xlabel('Reciprocal threshold')
+plt.ylabel('Spectral Gap')
+# plt.yscale('log')
+# plt.xscale('log')
+plt.legend()
 
 plt.show()

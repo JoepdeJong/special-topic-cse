@@ -24,7 +24,7 @@ if seed is not None:
     np.random.seed(seed)
 
 # Make new pandas dataframe
-data = pd.DataFrame(columns=['n', 'm', 'k0', 'initial_nodes', 'iteration', 'reciprocal_threshold', 'df', 'entropy', 'normalized_entropy', 'root_is_leader', 'filename'])
+data = pd.DataFrame(columns=['n', 'm', 'k0', 'initial_nodes', 'iteration', 'reciprocal_threshold', 'df', 'entropy', 'normalized_entropy', 'spectral_scaling', 'spectral_gap', 'root_is_leader', 'filename'])
 
 for n in n_nodes:
     for i in range(len(reciprocal_threshold)):    
@@ -34,16 +34,17 @@ for n in n_nodes:
 
             A = nx.adjacency_matrix(graph)
             A = A.todense()
+            
             df = Henrici(A)
-
             h = entropy2(A).real
             h_norm = h/entropy2((A+A.T)/2).real
+            spectral_scaling, spectral_gap = spectralScalingMeasure(A)
 
             # The only leader node in the prices model can be the root node
             root_is_leader = is_leader_node(graph, 0)
 
             filename = 'prices_model_n' + str(n) + '_m' + str(m) + '_k0' + str(k0) + '_initial_nodes' + str(initial_nodes) + '_p' + str(round(p, 2)) + '_iteration' + str(k)
-            new_row = [n, m, k0, initial_nodes, k, p, df, h, h_norm, root_is_leader, filename]
+            new_row = [n, m, k0, initial_nodes, k, p, df, h, h_norm, spectral_scaling, spectral_gap, root_is_leader, filename]
             data.loc[len(data)] = new_row
 
             # Store graph into file

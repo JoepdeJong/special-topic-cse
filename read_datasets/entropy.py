@@ -1,5 +1,5 @@
+import math
 import numpy as np
-
 
 ### compute normalized Henrici departure from normality d_f
 def Henrici(A):
@@ -8,6 +8,27 @@ def Henrici(A):
     if (frob**2 - np.sum(lambdas)) < 0:
         return 0
     return np.sqrt(frob**2 - np.sum(lambdas))/frob
+
+def subgraphCentrality(u, eigenvalues):
+    # print(np.square(u).shape, np.sinh(eigenvalues).shape)
+    return np.square(u).dot(np.sinh(eigenvalues))
+
+def spectralScalingMeasure(A):
+    eigenvalues, eigenvectors = np.linalg.eigh(A)
+    idx = eigenvalues.argsort()[::-1] 
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:,idx]
+
+    logH = -0.5*math.log10(math.sinh(eigenvalues[0]))
+    SC = subgraphCentrality(eigenvectors, eigenvalues)
+    logSC2 = np.log(SC)/2
+
+    # TODO: check if np.abs is allowed.
+    d = np.log10(np.abs(eigenvectors[:,1])) - (logH + logSC2)
+
+    spectral_gap = eigenvalues[0] - eigenvalues[1]
+    return (np.sum(d**2)/len(d))**0.5, spectral_gap
+
 
 ### compute entropy using a random walk
 # first compute transition rates T_ij and transition matrix T

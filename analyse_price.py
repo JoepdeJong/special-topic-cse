@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 from models.prices_model import prices_model
 
-n = 100 # Number of nodes
+n = 20 # Number of nodes
 n_iterations = 5 # Number of iterations
 m = 3 # Number of edges
 k0 = 1 # Initial factor
@@ -44,6 +44,9 @@ for i in range(len(reciprocal_threshold)):
         h2 = entropy2(A).real
 
         h3 = h2/entropy2((A+A.T)/2).real
+
+        spectral_scaling, spectral_gap = spectralScalingMeasure(A)
+        print(spectral_scaling, spectral_gap)
 
         # avg_df += df
         # avg_h1 += h1
