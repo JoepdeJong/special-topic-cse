@@ -21,7 +21,7 @@ def import_draw_catbrain(draw=False):
 	G = nx.read_graphml(fileName)
 
 	os.chdir(os.pardir)			
-	os.chdir('read-datasets')
+	os.chdir('read_datasets')
 
 	### compute adjacency matrix of G
 	A = nx.adjacency_matrix(G)
