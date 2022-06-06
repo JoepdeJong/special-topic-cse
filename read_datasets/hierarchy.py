@@ -18,7 +18,10 @@ def leader_nodes(G):
 	return leaders
 
 def is_leader_node(G, node):
-	return G.out_degree()[node]==0
+	# Check if the node is in the graph
+	if node not in G.nodes():
+		return False
+	return G.out_degree(node)==0
 
 def hierarchy(G):
 
