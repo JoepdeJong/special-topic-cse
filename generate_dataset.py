@@ -12,7 +12,7 @@ from models.prices_model import prices_model
 
 folder = './dataset/'
 seed = 1313
-n_nodes = [50, 100, 500, 1000] # Number of nodes
+n_nodes = [20, 50, 100] # Number of nodes
 n_iterations = 10 # Number of iterations (samples per configuration)
 m = 3 # Number of edges
 k0 = 1 # Initial factor
