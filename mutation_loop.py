@@ -1,3 +1,4 @@
+import time
 from matplotlib import pyplot as plt
 import networkx as nx
 import numpy as np
@@ -31,6 +32,7 @@ n_fields = len(['df', 'entropy', 'normalized_entropy', 'spectral_scaling', 'spec
 
 for n in n_nodes:
     for r in reciprocal_threshold:
+        start_time = time.time()
         data_n_p = data[(data['n'] == n) & (data['reciprocal_threshold'] == r)]
 
         # values = np.zeros((len(mutators), n_fields, number_of_mutations, len(mutation_steps)))
@@ -70,7 +72,8 @@ for n in n_nodes:
                         output.loc[len(output)] = [n, k, mutator.__name__, r, i, s, df, h, h_norm, spectral_scaling, spectral_gap, root_is_leader]
                     del graph_copy
         # del values
-        print('n = ' + str(n) + ', p = ' + str(r))
+        duration = time.time() - start_time
+        print('Finished n =', n, 'reciprocal_threshold =', r, 'in', duration, 'seconds')
 
 data.to_csv('mutations_m' + str(m) + '_k0' + str(k0) + '_initial_nodes' + str(initial_nodes)+'.csv', index=False)
 
