@@ -11,17 +11,19 @@ from mutators import *
 from read_datasets.entropy import *
 from read_datasets.hierarchy import *
 
+np.random.seed(1313)
 filename = 'dataset/prices_model_seed1313_m3_k01_initial_nodes1.csv'
 
 data = pd.read_csv(filename)
 number_of_mutations = 20
 
 n_nodes = data['n'].unique()
-n_nodes = [50]
+# n_nodes = [50]
 n_iterations = data['iteration'].max()
 reciprocal_threshold = data['reciprocal_threshold'].unique()
 
 mutators = [node_removal, edge_removal, edge_reversal, edge_addition]
+# mutators = [edge_reversal]
 mutation_steps = [1, 5, 10]
 
 # Assume m, k0 and initial_nodes are the same for all n
@@ -29,8 +31,6 @@ k0 = 1
 m = 3
 initial_nodes = 1
 
-
-output = pd.DataFrame(columns=['n', 'iteration', 'reciprocal_threshold', 'mutation', 'mutation_number', 'step', 'df', 'entropy', 'normalized_entropy', 'spectral_scaling', 'spectral_gap', 'root_is_leader'])
 n_fields = len(['df', 'entropy', 'normalized_entropy', 'spectral_scaling', 'spectral_gap', 'root_is_leader'])
 
 num_cores = multiprocessing.cpu_count()
@@ -40,8 +40,8 @@ def mutate(mutator, graph):
     output = []
     for s in range(len(mutation_steps)):
         step = mutation_steps[s]
-        graph = mutator(graph, step - k)
-        k += step
+        mutator(graph, step - k)
+        k = step
 
         A = nx.adjacency_matrix(graph).todense()
 
@@ -56,11 +56,12 @@ def mutate(mutator, graph):
 
         # Save the measures
         # values[m, :, i, s] = [df, h, h_norm, spectral_scaling, spectral_gap, root_is_leader]
-        output.append([s, df, h, h_norm, spectral_scaling, spectral_gap, root_is_leader])
+        output.append([step, df, h, h_norm, spectral_scaling, spectral_gap, root_is_leader])
 
     return output
 
 for n in n_nodes:
+    output = pd.DataFrame(columns=['n', 'iteration', 'reciprocal_threshold', 'mutation', 'mutation_number', 'step', 'df', 'entropy', 'normalized_entropy', 'spectral_scaling', 'spectral_gap', 'root_is_leader'])
     for r in reciprocal_threshold:
         start_time = time.time()
         data_n_p = data[(data['n'] == n) & (data['reciprocal_threshold'] == r)]
@@ -76,14 +77,14 @@ for n in n_nodes:
             # Mutate graph
             for mutator in mutators:
                 results = Parallel(n_jobs=num_cores)(delayed(mutate)(mutator, graph) for i in range(number_of_mutations))
-                for i in range(len(results)):
+                for i in range(number_of_mutations):
                     result = results[i]
-                    for j in range(len(result)):
-                        output.loc[len(output)] = [n, k, r, mutator.__name__, i] + result[j]
+                    for s in range(len(mutation_steps)):
+                        # print(result[s])
+                        output.loc[len(output)] = [n, k, r, mutator.__name__, i] + result[s]
                     # print(results)
                     # output.loc[len(output)] = [n, k, mutator.__name__, r, i] + result
 
         duration = time.time() - start_time
         print('Finished n =', n, 'reciprocal_threshold =', r, 'in', duration, 'seconds')
-
-data.to_csv('mutations_m' + str(m) + '_k0' + str(k0) + '_initial_nodes' + str(initial_nodes)+'.csv', index=False)
+    output.to_csv('output/mutations_m' + str(m) + '_k0' + str(k0) + '_initial_nodes' + str(initial_nodes)+'_n'+str(n)+'.csv', index=False)

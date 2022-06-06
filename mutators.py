@@ -10,6 +10,8 @@ def node_removal(graph: nx.DiGraph, n: int = 1):
 
     # Pick n random indices
     indices = np.random.choice(range(n_nodes), min(n, n_nodes))
+    # Convert indices to strings
+    indices = [str(i) for i in indices]
     graph.remove_nodes_from(indices)
 
     return graph
@@ -61,6 +63,10 @@ def edge_addition(graph: nx.DiGraph, n: int = 1):
 
         # Pick 2 random nodes
         [i,j] = np.random.choice(len(nodes), 2)
+        
+        # Convert to strings
+        i = str(i)
+        j = str(j)
 
         if i != j and (i, j) not in edges:
             graph.add_edge(i, j)
