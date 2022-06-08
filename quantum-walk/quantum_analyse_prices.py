@@ -55,6 +55,7 @@ def transmatrix(A):
 
 
 def eval_entropy(T,p_dist):
+	pass
 
 def get_entropy(n_iteration):
 
