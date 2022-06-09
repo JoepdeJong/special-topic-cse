@@ -92,13 +92,13 @@ def entropy2(A):
     return h
 
 if __name__ == '__main__':
-    from import_rhesusbrain import *
-    G = import_draw_rhesusbrain(draw=False)
+    from import_tradediplomats import *
+    G = import_draw_diplomats(draw=False)
     A = nx.adjacency_matrix(G)
     A = A.todense()
     df = Henrici(A)
     tol = 1e-10
     h1 = entropy(tol, A)
     h2 = entropy2(A)
-    h3 = entropy2(A)/entropy((A+A.T)/2)
-    print(h2, h3)
+    h3 = entropy2(A)/entropy2((A+A.T)/2)
+    print(df, h3)

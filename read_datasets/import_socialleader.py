@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 31 15:51:03 2022
+Created on Wed Jun  8 23:42:54 2022
 
-@author: Anne-Fleur
+@author: ksyunetz
 """
 
 import numpy as np
@@ -10,12 +11,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os
 
-def import_draw_highschool(draw=False):
+def import_draw_socialleader(draw=False):
 
 	os.chdir(os.pardir)
 	os.chdir('datasets')
 	
-	fileName = 'net_moreno_highschool.dat'
+	fileName = 'net_social_leader.dat'
 	
 	a = np.loadtxt(fileName)
 	a = a.astype(np.int32) #a is now an array with each row a link between two nodes in the network
@@ -25,7 +26,7 @@ def import_draw_highschool(draw=False):
 
 	### add 70 nodes to a directed graph
 	G = nx.DiGraph()
-	G.add_nodes_from(np.arange(1,70))
+	G.add_nodes_from(np.arange(1,33))
 
 
 	### add edges to the directed graph
