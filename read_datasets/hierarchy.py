@@ -35,7 +35,7 @@ def hierarchy(G):
 
 	for node in non_leaders:
 		connected_leaders = {key:value for key,value in all_paths_length[node].items() if key in leaders}
-		min_dist = min(connected_leaders.values())
+		min_dist = min(connected_leaders.values(), default="EMPTY") 
 		hierarchy[node] = {key:value for key,value in connected_leaders.items() if value == min_dist}
 
 	return hierarchy
