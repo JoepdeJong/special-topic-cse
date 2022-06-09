@@ -83,6 +83,7 @@ def hier_lvl_shift(G):
 if __name__ == '__main__':
     from import_literature1976 import *
     G = import_draw_literature (draw=False)
+    A = G.adjacency()
     l = leader_nodes(G)
     h = hierarchy(G)
     if len(l)>0:
@@ -114,7 +115,7 @@ if __name__ == '__main__':
         plt.figure(figsize=(5,3))
         plt.plot(lens, hier_struct[0,:], 'b.-', alpha = 0.5)
         plt.plot(lens, hier_struct[1,:], 'r.-', alpha = 0.5)
-        labels = ('Downwards', 'Upwards')
+        labels = ('Upwards', 'Downwards')
         plt.legend(labels, loc = 'upper right')
         plt.xlabel('Hierarchical number')
         plt.ylabel('Fraction of Edges in Direction')
