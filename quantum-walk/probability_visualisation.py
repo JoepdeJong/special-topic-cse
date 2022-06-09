@@ -9,7 +9,7 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-from quantum_analyse_prices import *
+from quantum_analyse_prices2 import *
 import sys
 sys.path.append('../read_datasets')
 from entropy import *
@@ -49,41 +49,49 @@ def draw_classic_quantum_probs(G, p, s):
 	quantum = p
 	vmax = max(max(np.abs(classic)), max(quantum))
 
-	fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18,9))
-	plt.sca(ax1)
-	pos = nx.spring_layout(G, seed = 2)
-	nodes = nx.draw_networkx_nodes(G, pos, node_color = classic, cmap = plt.cm.autumn_r, vmin = 0, vmax = vmax)
-	nx.draw_networkx_edges(G, pos)
-	nx.draw_networkx_labels(G, pos)
-	plt.colorbar(nodes)
-	plt.axis('off')
+# 	fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18,9))
+# 	plt.sca(ax1)
+# 	pos = nx.spring_layout(G, seed = 2)
+# 	nodes = nx.draw_networkx_nodes(G, pos, node_color = classic, cmap = plt.cm.autumn_r, vmin = 0, vmax = vmax)
+# 	nx.draw_networkx_edges(G, pos)
+# 	nx.draw_networkx_labels(G, pos)
+# 	plt.colorbar(nodes)
+# 	plt.axis('off')
 
-	plt.sca(ax2)
-	pos = nx.spring_layout(G, seed = 2)
-	nodes = nx.draw_networkx_nodes(G, pos, node_color = quantum, cmap = plt.cm.autumn_r, vmin = 0, vmax = vmax)
-	nx.draw_networkx_edges(G, pos)
-	nx.draw_networkx_labels(G,pos)
-	plt.colorbar(nodes)
-	plt.axis('off')
+# 	plt.sca(ax2)
+# 	pos = nx.spring_layout(G, seed = 2)
+# 	nodes = nx.draw_networkx_nodes(G, pos, node_color = quantum, cmap = plt.cm.autumn_r, vmin = 0, vmax = vmax)
+# 	nx.draw_networkx_edges(G, pos)
+# 	nx.draw_networkx_labels(G,pos)
+# 	plt.colorbar(nodes)
+# 	plt.axis('off')
 
-# 	plt.savefig("probability_results/"+str(s)+".svg", format = 'svg', dpi=300)
-	plt.show()
+ 	# plt.savefig("probability_results/"+str(s)+".svg", format = 'svg', dpi=300)
+# 	plt.show()
+
+	return classic
 
 
 
 if __name__ == '__main__':
-	plt.figure()
+	a = np.loadtxt('../dataset/prices_model_seed1313_m3_k01_initial_nodes1.csv', delimiter = ',', skiprows = 1, usecols = (4,5))
+	a = np.round(a[0::10,1], 2)
+
 	i = 0
-	for f in graph_data_list(0)[:25]:
-		i += 1
+	for f in graph_data_list(1):
 		### build graph
 		G = nx.DiGraph()
 		G.add_edges_from(np.loadtxt('../dataset/'+str(f)))
 
 		f2 = str(f[:-3] + 'npy')
-		p = np.load('results_650_steps_it0/'+f2)
-# 		draw_classic_quantum_probs(G, p, f[:-4])
-		plt.plot(np.arange(len(G.nodes())), p, label = str(i))
+		p = np.load('new_results_650_steps_it1/'+f2)
+		c = draw_classic_quantum_probs(G, p, f[:-4])
+		plt.figure()
+		plt.plot(np.arange(len(G.nodes())), p, label = 'quantum')
+		plt.plot(np.arange(len(G.nodes())), c, label = 'classic')
+		plt.title('p = '+str(a[i]))
 		plt.legend()
-		plt.show()
+		plt.savefig("probability_results_plots/"+str(f[:-4])+".svg", format = 'svg', dpi=300)
+		plt.close()
+		i += 1
 

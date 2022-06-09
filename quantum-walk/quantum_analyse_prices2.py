@@ -55,7 +55,6 @@ def transmatrix(A):
 
 
 def eval_entropy(T,p_dist):
-<<<<<<< HEAD
 	n = T.shape[0]
 	h = 0
 	for i in range(n):
@@ -63,10 +62,6 @@ def eval_entropy(T,p_dist):
 			if T[i,j] > 0:
 				h -= T[i,j]*p_dist[j]*np.log(T[i,j])
 	return h
-
-=======
-	pass
->>>>>>> ef3df9f7c319916dbf7c9ba90db8bbfc825f603e
 
 def get_entropy(n_iteration):
 
