@@ -81,8 +81,8 @@ def hier_lvl_shift(G):
     return  ans
 
 if __name__ == '__main__':
-    from import_literature1976 import *
-    G = import_draw_literature (draw=False)
+    from import_stonytxt import *
+    G = import_draw_stonytxt(draw=False)
     A = G.adjacency()
     l = leader_nodes(G)
     h = hierarchy(G)
@@ -97,7 +97,10 @@ if __name__ == '__main__':
         s = 0
         for j in range(len(levs)):
             for i in range(3):
-                hier_struct[i,j] = col[i,j]/edges_num[i]
+                if edges_num[i] != 0:
+                    hier_struct[i,j] = col[i,j]/edges_num[i]
+                else:
+                    hier_struct[i,j] = 0
         hier_shift = np.array(hier_lvl_shift(G))
         hier_lvl_frac = np.zeros((len(levs),len(levs)))
         for i in range(1,len(levs)):
@@ -106,11 +109,11 @@ if __name__ == '__main__':
         plt.figure(figsize=(3,3))
         plt.imshow(hier_lvl_frac, interpolation='none', aspect='equal', cmap=cm.Blues, alpha = 1)
         plt.colorbar()
-        plt.xticks(np.arange(0,4,1))
-        plt.yticks(np.arange(0,4,1))
+        plt.xticks(np.arange(0,len(levs),1))
+        plt.yticks(np.arange(0,len(levs),1))
         plt.xlabel('$Hierarchical~number$')
         plt.ylabel('$Hierarchical~number$')
-        plt.savefig('../fig4/hiershift.png', dpi=300, bbox_inches = "tight")
+        plt.savefig('../fig4/hiershift_stonytxt.png', dpi=300, bbox_inches = "tight")
         
         plt.figure(figsize=(5,3))
         plt.plot(lens, hier_struct[0,:], 'b.-', alpha = 0.5)
@@ -119,8 +122,8 @@ if __name__ == '__main__':
         plt.legend(labels, loc = 'upper right')
         plt.xlabel('Hierarchical number')
         plt.ylabel('Fraction of Edges in Direction')
-        plt.title('Literary criticism network of Dutch writers in 1976')
-        plt.savefig('../fig4/hiernumb.png', dpi=300, bbox_inches = "tight")
+        plt.title('River Foodweb in Stony Stream, New Zealand')
+        plt.savefig('../fig4/hiernumb_stonytxt.png', dpi=300, bbox_inches = "tight")
         
         width = 0.75
         fig = plt.figure(figsize=(5,4))
@@ -131,9 +134,9 @@ if __name__ == '__main__':
         ax.set_ylabel('Sum of edges')
         ax.set_xlabel('Types') 
         ax.set_title('Total weight of edges')
-        ax.set_yticks(np.arange(0, edges_num[0]+edges_num[2], 10))
+        ax.set_yticks(np.arange(0, edges_num[0]+edges_num[2], 100))
         ax.set_xticks([1,2],('$upwards+$\n$neutral$', '$downwards$'))
-        plt.savefig('../fig4/redbluegreen_barchart.png', dpi=300, bbox_inches = "tight")
+        plt.savefig('../fig4/redbluegreen_barchart_stonytxt.png', dpi=300, bbox_inches = "tight")
     else:
         print('No leader nodes in the network')
 

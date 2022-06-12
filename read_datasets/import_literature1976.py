@@ -19,7 +19,7 @@ def import_draw_literature(draw=False):
 
 	a = np.loadtxt(fileName, skiprows = 37)
 	a = a[:, :2].astype(np.int32) #a is now an array with each row a link between two nodes in the network
-
+    
 	os.chdir(os.pardir)			
 	os.chdir('read_datasets')
 
