@@ -87,24 +87,25 @@ if __name__ == '__main__':
 		f2 = str(f[:-3] + 'npy')
 
 		### code that creates probability difference in graphs
-		p = np.load('new_results_650_steps_it1/'+f2)
-		c = draw_classic_quantum_probs(G, p, f[:-4])
+# 		p = np.load('new_results_650_steps_it1/'+f2)
+# 		c = draw_classic_quantum_probs(G, p, f[:-4])
 
-		draw_quantum_prob(G, np.abs(p.flatten()-c))
-		plt.savefig("probability_results_graphs/"+str(f[:-4])+".svg", format = 'svg', dpi=300)
-		plt.close()
+# 		draw_quantum_prob(G, np.abs(p.flatten()-c))
+# 		plt.savefig("probability_results_graphs/"+str(f[:-4])+".png", format = 'png', dpi=300)
+# 		plt.close()
 
 
 		### code that creates probability plots
 
-# 		p = np.load('new_results_650_steps_it1/'+f2)
-# 		c = draw_classic_quantum_probs(G, p, f[:-4])
+		p = np.load('new_results_650_steps_it1/'+f2)
+		print(p[:3])
+		c = draw_classic_quantum_probs(G, p, f[:-4])
 # 		plt.figure()
 # 		plt.plot(np.arange(len(G.nodes())), p, label = 'quantum')
 # 		plt.plot(np.arange(len(G.nodes())), c, label = 'classic')
 # 		plt.title('p = '+str(a[i]))
 # 		plt.legend()
-# 		plt.savefig("probability_results_plots/"+str(f[:-4])+".svg", format = 'svg', dpi=300)
+# 		plt.savefig("probability_results_plots/"+str(f[:-4])+".png", format = 'png', dpi=300)
 # 		plt.close()
 
 		i += 1
