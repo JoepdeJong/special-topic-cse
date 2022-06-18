@@ -69,7 +69,7 @@ def get_entropy(n_iteration):
 	datasets = graph_data_list(n_iteration)
 
 	#assemble folder name
-	foldername_p_dist = 'results_650_steps_it'+str(n_iteration)+'/'
+	foldername_p_dist = 'new_results_650_steps_it'+str(n_iteration)+'/'
 
 	#build array to store entropies
 	# first row for 20 node graphs
@@ -197,5 +197,6 @@ def get_normalized_entropy(n_iteration):
 
 
 
-
+if __name__=='__main__':
+	get_entropy(1)
 

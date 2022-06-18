@@ -1,4 +1,4 @@
-from szegedy_QW import average_dist_U2
+from szegedy_QW import average_dist
 import os
 import networkx as nx
 import numpy as np
@@ -29,7 +29,7 @@ def get_dist(n_iteration,N_steps):
 
 		G.add_edges_from(np.loadtxt('../dataset/'+str(f)))
 
-		p_av = average_dist_U2(G,N_steps)
+		p_av = average_dist(G,N_steps)
 
 		np.save(os.path.join('new_results_'+str(N_steps)+'_steps_it'+str(n_iteration),str(f[:-4])),p_av.todense())
 
