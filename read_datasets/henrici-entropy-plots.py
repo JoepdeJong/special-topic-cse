@@ -25,5 +25,7 @@ for i in range(9):
 ax.legend(title, bbox_to_anchor=(0.77, 0.85))
 plt.grid()
 plt.title('Normalized entropy rate dependence \n on the network polarization in real-world networks')
+plt.xlabel('$\hat{d}_F$')
+plt.ylabel('$\hat{h}$')
 plt.savefig('../fig2/normentr_df.png', dpi=300, bbox_inches = "tight")
 plt.show()
