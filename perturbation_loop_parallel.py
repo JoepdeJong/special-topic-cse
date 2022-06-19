@@ -7,7 +7,7 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
-from mutators import *
+from perturbators import *
 from read_datasets.entropy import *
 from read_datasets.hierarchy import *
 
