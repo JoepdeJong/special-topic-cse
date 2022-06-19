@@ -2,6 +2,10 @@
 
 WI4450 - Special Topics in Computational Science and Engineering.
 
+Implementation of a project were we focus our research on the main two measures presented by O’Brien et al.: The entropy and Hierarchy of a network. We start of our study by investigating the relationship between the structure of networks and their non-normality level. Furthermore, we have extended our research including two additions: Robustness analysis of generated datasets, and analysis of the entropy via Quantum walks.
+
+Report: to be published.
+
 ## Install
 
 ```sh
