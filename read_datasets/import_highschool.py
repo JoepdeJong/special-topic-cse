@@ -5,7 +5,6 @@ Created on Tue May 31 15:51:03 2022
 @author: Anne-Fleur
 """
 
-
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -22,7 +21,7 @@ def import_draw_highschool(draw=False):
 	a = a.astype(np.int32) #a is now an array with each row a link between two nodes in the network
 
 	os.chdir(os.pardir)			
-	os.chdir('read-datasets')
+	os.chdir('read_datasets')
 
 	### add 70 nodes to a directed graph
 	G = nx.DiGraph()

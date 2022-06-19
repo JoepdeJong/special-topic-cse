@@ -19,13 +19,13 @@ def import_draw_literature(draw=False):
 
 	a = np.loadtxt(fileName, skiprows = 37)
 	a = a[:, :2].astype(np.int32) #a is now an array with each row a link between two nodes in the network
-
+    
 	os.chdir(os.pardir)			
 	os.chdir('read_datasets')
 
 	### add 35 nodes to a directed graph
 	G = nx.DiGraph()
-	G.add_nodes_from(np.arange(1,35))
+	G.add_nodes_from(np.arange(1,36))
 
 
 	### add edges to the directed graph
