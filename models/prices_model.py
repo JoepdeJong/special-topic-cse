@@ -58,6 +58,7 @@ def prices_model(n, m, k0 = 1, n0 = 1, reciprocal_threshold = 1):
     return G
 
 if __name__ == '__main__':
-    prices_graph = prices_model(20, 3, 1, 1, 0.20)
+    # prices_graph = prices_model(20, 3, 1, 1, 0.20)
+    prices_graph = prices_model(7, 3, 1, 1, 0)
     nx.draw(prices_graph, with_labels=True)
     plt.show()
