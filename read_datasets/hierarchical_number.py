@@ -13,6 +13,7 @@ from hierarchy import *
 def getvalue(val):
     return list(val.values())[0]
 
+#returns multidimensional list where each list contains of the nodes from corresponding hierarchy level
 def levels_struct(G):
     k = len(G.nodes)
     h = hierarchy(G)
@@ -26,6 +27,7 @@ def levels_struct(G):
         nodes[getvalue(value)].append(key) #multidimensional list with nodes of each hierarchical numbers
     return nodes
 
+#returns three lists with the number of edges of blue/red/green colour coming into each hierarchy level (ordered from 0 onwards)
 def colouring(G):
     levs = levels_struct(G)
     red = [[[] for i in range(0)] for j in range(len(levs))] 
@@ -57,6 +59,8 @@ def colouring(G):
         green_num[k] = len(green[k])
     return  blue_num, red_num, green_num
 
+
+#returns the total number of edges going from one hierarchy level to another
 def hier_lvl_shift(G):
     levs = levels_struct(G)
     ans = np.zeros((len(levs),len(levs)))
@@ -86,7 +90,7 @@ if __name__ == '__main__':
     A = G.adjacency()
     l = leader_nodes(G)
     h = hierarchy(G)
-    if len(l)>0:
+    if len(l)>0: #checks whether there are leader nodes in the network
         col = np.array(colouring(G))
         levs = levels_struct(G)
         edges_num = np.zeros(3)
@@ -113,7 +117,7 @@ if __name__ == '__main__':
         plt.yticks(np.arange(0,len(levs),1))
         plt.xlabel('$Hierarchical~number$')
         plt.ylabel('$Hierarchical~number$')
-        plt.savefig('../fig4/hiershift_literature.png', dpi=300, bbox_inches = "tight")
+        #plt.savefig('../fig4/hiershift_literature.png', dpi=300, bbox_inches = "tight")
         
         plt.figure(figsize=(5,3))
         plt.plot(lens, hier_struct[0,:], 'b.-', alpha = 0.5)
@@ -123,7 +127,7 @@ if __name__ == '__main__':
         plt.xlabel('Hierarchical number')
         plt.ylabel('Fraction of Edges in Direction')
         plt.title('Literary criticism network of Dutch writers in 1976')
-        plt.savefig('../fig4/hiernumb_literature.png', dpi=300, bbox_inches = "tight")
+        #plt.savefig('../fig4/hiernumb_literature.png', dpi=300, bbox_inches = "tight")
         
         width = 0.75
         fig = plt.figure(figsize=(5,4))
@@ -140,7 +144,7 @@ if __name__ == '__main__':
         ax.set_yticks(np.arange(0, edges_num[0]+edges_num[2], 10))
         ax.set_xticks([1,2],('$upwards+$\n$neutral$', '$downwards$'))
         plt.legend(loc = 'upper right')
-        plt.savefig('../fig4/redbluegreen_barchart_literature.png', dpi=300, bbox_inches = "tight")
+        #plt.savefig('../fig4/redbluegreen_barchart_literature.png', dpi=300, bbox_inches = "tight")
     else:
         print('No leader nodes in the network')
 
